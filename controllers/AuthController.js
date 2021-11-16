@@ -10,6 +10,7 @@ const {authRegisterSchema, LoginSchema, authEditSchema, ChangePasswordSchema} = 
 const _ = require('underscore');
 const {UserUpload} = require('../config/storage');
 const {signAccessToken, signARefreshToken} = require("../helpers/token.jwt");
+const {transport} = require("../helpers/mail.settings");
 
 exports.register = async (req, res, next) => {
     try {
@@ -41,16 +42,40 @@ exports.register = async (req, res, next) => {
                 email: req.body.email,
                 password: hash
             })
-            res.status(200).send({
-                message: 'The user has been created successfully',
-                user: {
-                    name: user.name,
-                    username: user.username,
-                    email: user.email,
-                    createdAt: user.createdAt,
-                    updatedAt: user.updatedAt
+            //Send Email to User
+            var mailOptions = {
+                from: `${process.env.MAIL_FROM_NAME} <${process.env.MAIL_FROM_NAME}>`,
+                to: `${user.email}`,
+                subject: 'Thanks for Registering with Us',
+                text: 'Thanks for choosing us for you daily notes',
+                html: '<b>Hello Dear! </b><br> Thanks for choosing us for you daily notes<br/>',
+            };
+
+            transport.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
                 }
+                console.log('Email has Sent: %s', info.messageId);
             });
+
+
+            let userData = {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                username: user.username,
+                image: (user.image == null) ? "" : req.get('Host') + user.image,
+            };
+            const accessToken = await signAccessToken(userData);
+            const refreshToken = await signARefreshToken(userData);
+            res.status(200).send({
+                message: "Your Account has successfully been created",
+                token_type: 'Bearer',
+                accessToken: accessToken,
+                refreshToken: refreshToken,
+                expiresIn: process.env.JWT_TIMEOUT_DURATION,
+                user: userData
+            })
         }
 
     } catch (error) {
