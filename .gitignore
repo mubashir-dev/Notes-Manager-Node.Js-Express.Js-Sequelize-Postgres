@@ -1,0 +1,6 @@
+/node_modules
+/.env
+/public
+/postman-collection
+/public/uploads
+/.idea
