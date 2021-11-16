@@ -9,5 +9,6 @@ router.post('/login', AuthController.login);
 router.put('/addProfile', UserUpload.single('image'), AuthController.addProfileImage);
 router.put('/update', AuthController.update);
 router.put('/changePassword', AuthController.changePassword);
+router.get('/verify', AuthController.verify);
 
 module.exports = router

@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const User = db.users;
+const Email_Verification = db.email_verification;
 const Op = db.Sequelize.Op;
 const httpError = require("http-errors");
 const passwordHash = require("../helpers/password.hash");
@@ -42,6 +43,11 @@ exports.register = async (req, res, next) => {
                 email: req.body.email,
                 password: hash
             })
+            const token = Math.random().toString(16).slice(5);
+            Email_Verification.create({
+                email: user.email,
+                token: token
+            })
             //Send Email to User
             var mailOptions = {
                 from: `${process.env.MAIL_FROM_NAME} <${process.env.MAIL_FROM_NAME}>`,
@@ -57,24 +63,23 @@ exports.register = async (req, res, next) => {
                 }
                 console.log('Email has Sent: %s', info.messageId);
             });
-
-
-            let userData = {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                username: user.username,
-                image: (user.image == null) ? "" : req.get('Host') + user.image,
+            //Verification Email
+            var mailOptions = {
+                from: `${process.env.MAIL_FROM_NAME} <${process.env.MAIL_FROM_ADDRESS}>`,
+                to: `${user.email}`,
+                subject: 'Verify Your Email',
+                text: 'Verify your email and get most from Notes Manager',
+                html: `<button><a href="http://localhost:3000/auth/verify?token=${token}">Verify Email</a></button>`,
             };
-            const accessToken = await signAccessToken(userData);
-            const refreshToken = await signARefreshToken(userData);
+
+            transport.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log('Email has Sent: %s', info.messageId);
+            });
             res.status(200).send({
-                message: "Your Account has successfully been created",
-                token_type: 'Bearer',
-                accessToken: accessToken,
-                refreshToken: refreshToken,
-                expiresIn: process.env.JWT_TIMEOUT_DURATION,
-                user: userData
+                message: "Your Account has successfully been created,Kindly Verify Your Email Account"
             })
         }
 
@@ -139,27 +144,33 @@ exports.login = async (req, res, next) => {
             if (!foundUser) {
                 next(new httpError(404, 'User is not found in our system'));
             }
-            //Compare password
-            let hashCompare = await passwordHash.compare(req.body.password, foundUser.password);
+            if (foundUser.email_verified) {
+                //Compare password
+                let hashCompare = await passwordHash.compare(req.body.password, foundUser.password);
 
-            if (hashCompare) {
-                let userData = {
-                    id: foundUser.id,
-                    name: foundUser.name,
-                    email: foundUser.email,
-                    username: foundUser.username,
-                    image: (foundUser.image == null) ? "" : req.get('Host') + foundUser.image,
-                };
-                //Get Access and Refresh token
-                const accessToken = await signAccessToken(userData);
-                const refreshToken = await signARefreshToken(userData);
+                if (hashCompare) {
+                    let userData = {
+                        id: foundUser.id,
+                        name: foundUser.name,
+                        email: foundUser.email,
+                        username: foundUser.username,
+                        image: (foundUser.image == null) ? "" : req.get('Host') + foundUser.image,
+                    };
+                    //Get Access and Refresh token
+                    const accessToken = await signAccessToken(userData);
+                    const refreshToken = await signARefreshToken(userData);
+                    res.status(200).send({
+                        message: "Successfully Logged-In",
+                        token_type: 'Bearer',
+                        accessToken: accessToken,
+                        refreshToken: refreshToken,
+                        expiresIn: process.env.JWT_TIMEOUT_DURATION,
+                        user: userData
+                    })
+                }
+            } else {
                 res.status(200).send({
-                    message: "Successfully Logged-In",
-                    token_type: 'Bearer',
-                    accessToken: accessToken,
-                    refreshToken: refreshToken,
-                    expiresIn: process.env.JWT_TIMEOUT_DURATION,
-                    user: userData
+                    message: "Your Account has not verified"
                 })
             }
             next(new httpError(401, {
@@ -251,5 +262,24 @@ exports.changePassword = [auth,
         }
     }
 ];
+exports.verify = async function (req, res) {
+    const emailVerification = await Email_Verification.findOne({
+        where: {token: req.query.token}
+    });
+    console.log(emailVerification)
+    if (emailVerification) {
+        await User.update({email_verified: true}, {where: {email: emailVerification.email}});
+        await Email_Verification.destroy({
+            where: {token: emailVerification.token}
+        })
+        res.status(200).send({
+            message: "Account has been verified"
+        })
+    } else {
+        res.status(200).send({
+            message: "Account has already been verified"
+        })
+    }
+}
 //logout user
 exports.logout = []
