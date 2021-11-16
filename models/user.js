@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
         profile_url: {
             type: DataTypes.STRING,
             allowNull: true,
+        },
+        email_verified: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true
         }
     }, {
         sequelize,
