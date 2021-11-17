@@ -1,0 +1,413 @@
+{
+	"info": {
+		"_postman_id": "8a75764a-5883-4a71-9370-dde3e5b76b97",
+		"name": "Notes-Manager-Node-Js-Express-Js-Postgres",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Imram Malik Khan",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "imram-singer-2028",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "imran18@singer.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "imran18@singer.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsIm5hbWUiOiJTYXJkYXIgTXViYXNoaXIgQWxpIiwiZW1haWwiOiJtdWJhc2hpcjEwMkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6Im11YmFzaGlyLWRldi0yMDIwIiwiaW1hZ2UiOiIiLCJpYXQiOjE2MzcwOTAzNDgsImV4cCI6MTYzNzA5NzU0OCwiaXNzIjoiTm90ZXNNYW5hZ2VyLm9yZyJ9.4x_N3OMxHk26Ru03PEqUYd6r0Dd9satamWrKOZhxGt4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Mubashir Ali",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "mubashir-iplex",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "mubashir@iplex.co",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsIm5hbWUiOiJTYXJkYXIgTXViYXNoaXIgQWxpIiwiZW1haWwiOiJtdWJhc2hpcjEwMkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6Im11YmFzaGlyLWRldi0yMDIwIiwiaW1hZ2UiOiIiLCJpYXQiOjE2MzcwOTAzNDgsImV4cCI6MTYzNzA5NzU0OCwiaXNzIjoiTm90ZXNNYW5hZ2VyLm9yZyJ9.4x_N3OMxHk26Ru03PEqUYd6r0Dd9satamWrKOZhxGt4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "currentPassword",
+									"value": "25252525",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/changePassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Email Verification",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/auth/verify?token=c154bbd08f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"verify"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "c154bbd08f"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notes",
+			"item": [
+				{
+					"name": "Add Notes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwibmFtZSI6IkltcmFtIE1hbGlrIEtoYW4iLCJlbWFpbCI6ImltcmFuMThAc2luZ2VyLmNvbSIsInVzZXJuYW1lIjoiaW1yYW0tc2luZ2VyLTIwMjgiLCJpbWFnZSI6IiIsImlhdCI6MTYzNzE2MjA4OSwiZXhwIjoxNjM3MTY5Mjg5LCJpc3MiOiJOb3Rlc01hbmFnZXIub3JnIn0.0nUp5THQsig70Q9i2YU3We_NU6689xbY49B3EhU5zAI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Virtual Conference 2021 Karachi",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Testing......................",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/note/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"note",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Note",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwibmFtZSI6IkltcmFtIE1hbGlrIEtoYW4iLCJlbWFpbCI6ImltcmFuMThAc2luZ2VyLmNvbSIsInVzZXJuYW1lIjoiaW1yYW0tc2luZ2VyLTIwMjgiLCJpbWFnZSI6IiIsImlhdCI6MTYzNzE2MjA4OSwiZXhwIjoxNjM3MTY5Mjg5LCJpc3MiOiJOb3Rlc01hbmFnZXIub3JnIn0.0nUp5THQsig70Q9i2YU3We_NU6689xbY49B3EhU5zAI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Abc2021",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Abc.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/note/edit/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"note",
+								"edit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Note",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwibmFtZSI6IkltcmFtIE1hbGlrIEtoYW4iLCJlbWFpbCI6ImltcmFuMThAc2luZ2VyLmNvbSIsInVzZXJuYW1lIjoiaW1yYW0tc2luZ2VyLTIwMjgiLCJpbWFnZSI6IiIsImlhdCI6MTYzNzE2MjA4OSwiZXhwIjoxNjM3MTY5Mjg5LCJpc3MiOiJOb3Rlc01hbmFnZXIub3JnIn0.0nUp5THQsig70Q9i2YU3We_NU6689xbY49B3EhU5zAI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/note/show/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"note",
+								"show",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Notes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwibmFtZSI6IkltcmFtIE1hbGlrIEtoYW4iLCJlbWFpbCI6ImltcmFuMThAc2luZ2VyLmNvbSIsInVzZXJuYW1lIjoiaW1yYW0tc2luZ2VyLTIwMjgiLCJpbWFnZSI6IiIsImlhdCI6MTYzNzE2MjA4OSwiZXhwIjoxNjM3MTY5Mjg5LCJpc3MiOiJOb3Rlc01hbmFnZXIub3JnIn0.0nUp5THQsig70Q9i2YU3We_NU6689xbY49B3EhU5zAI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/note/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"note",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Note",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwibmFtZSI6IkltcmFtIE1hbGlrIEtoYW4iLCJlbWFpbCI6ImltcmFuMThAc2luZ2VyLmNvbSIsInVzZXJuYW1lIjoiaW1yYW0tc2luZ2VyLTIwMjgiLCJpbWFnZSI6IiIsImlhdCI6MTYzNzE2MjA4OSwiZXhwIjoxNjM3MTY5Mjg5LCJpc3MiOiJOb3Rlc01hbmFnZXIub3JnIn0.0nUp5THQsig70Q9i2YU3We_NU6689xbY49B3EhU5zAI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/note/delete/34",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"note",
+								"delete",
+								"34"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
