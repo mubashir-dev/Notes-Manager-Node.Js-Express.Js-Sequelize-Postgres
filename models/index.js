@@ -21,6 +21,7 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.users = require("./user")(sequelize, Sequelize);
+db.notes = require("./note")(sequelize, Sequelize);
 db.email_verification = require("./email_verification")(sequelize, Sequelize);
 
 module.exports = db;
