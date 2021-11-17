@@ -16,9 +16,11 @@ app.use("/public", express.static(path.join(__dirname, 'public/uploads')));
 
 //requiring routes
 const UserRoute = require(path.join(__dirname, 'routes', 'auth.route'))
+const NoteRoute = require(path.join(__dirname, 'routes', 'note.route'))
 
 //Routing
 app.use('/auth', UserRoute)
+app.use('/note', NoteRoute)
 
 
 // 404 Handling
